@@ -171,7 +171,7 @@ export default function Top() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {users.map((el) => {
+                        {filterUsers.map((el) => {
                             return (
                                 <TableRow key={el.id}>
                                     <TableCell><Avatar src={el.image} /></TableCell>
