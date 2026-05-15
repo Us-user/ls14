@@ -49,10 +49,14 @@ export default function Top() {
             console.log(error);
         }
     }
-    async function edStat(id, st) {
+    async function edStat(el, st) {
+        let us={
+            ...el,
+            status:!el.status
+        }
         try {
-            await axios.patch(`${api}/${id}`, { status: st })
-            setUsers(users.map((el) => el.id == id ? { ...el, status: st } : el))
+            await axios.put(`${api}/${el.id}`,us)
+            setUsers(users.map((elem) => elem.id == el.id ? { ...elem, status: st } : elem))
         } catch (error) {
             console.log(error);
         }
@@ -182,7 +186,7 @@ export default function Top() {
                                         fontWeight: '500'
                                     }}>{el.status ? "online" : 'offline'}</Typography></TableCell>
                                     <TableCell>
-                                        <Checkbox checked={el.status} onChange={(e) => edStat(el.id, e.target.checked)} />
+                                        <Checkbox checked={el.status} onChange={(e) => edStat(el, e.target.checked)} />
                                     </TableCell>
                                     <TableCell>
                                         <IconButton onClick={(e) => handleMoreClick(e, el)}>
