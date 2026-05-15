@@ -30,6 +30,7 @@ export default function Top() {
     const [active, setActive] = useState(null)
 
     const [search, setSearch]=useState('')
+    const [searchSel,setSearchSel]=useState('All')
 
 
     function handleMoreClick(event, user) {
@@ -122,7 +123,13 @@ export default function Top() {
         get();
     }, []);
 
-    let filterUsers=users.filter(user=>user.name.toLowerCase().includes(search.toLowerCase()))
+    let filterUsers=users.filter((el)=>{
+        let t1=el.name.toLowerCase().includes(search.toLowerCase())
+
+        let t2=searchSel==='All'||(searchSel=='Online' ? el.status===true:el.status===false)
+
+        return t1&&t2
+    })
     return (
         <Box sx={{
             width: 'full',
@@ -143,6 +150,7 @@ export default function Top() {
                     />
 
                     <Select
+                        onChange={(e)=>setSearchSel(e.target.value)}
                         variant="standard"
                         disableUnderline
                         defaultValue="All"
@@ -154,8 +162,8 @@ export default function Top() {
                         }}
                     >
                         <MenuItem value="All">All</MenuItem>
-                        <MenuItem value={10}>Ten</MenuItem>
-                        <MenuItem value={20}>Twenty</MenuItem>
+                        <MenuItem value='Online'>Online</MenuItem>
+                        <MenuItem value="Offline">Offline</MenuItem>
                     </Select>
                 </Stack>
                 <Button variant="contained" onClick={() => setOpen(true)}>+ Add User</Button>
